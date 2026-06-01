@@ -1,5 +1,5 @@
 ﻿
-using Microsoft.VisualBasic;
+
 
 Empleado[] empleados = new Empleado[10];
 
@@ -18,11 +18,31 @@ void agregarEmpleado(int pos)
     Console.ResetColor();
 }
 
+void mostrarDatos(int pos)
+{
+    Console.WriteLine("Mostrar registros");
+    for(int i = 0; i < pos; i++)
+    {
+        Console.WriteLine($"Nombre: {empleados[i].nombres} \nApellidos: {empleados[i].apellidos} \nCargo: {empleados[i].cargo} \nSalario: {empleados[i].salario}");
+    }
+}
+
 int menu()
 {
-    Console.Write("1. Agregar \n2. Mostrar \n3. Eliminar \n4.Salir \nDigite su opcion: ");
+    Console.Write("1. Agregar \n2. Mostrar \n3. Guardar \n4.Salir \nDigite su opcion: ");
     int op = int.Parse(Console.ReadLine());
     return op;
+}
+
+void guardarEmpleados(int pos)
+{
+    StreamWriter archivo = new StreamWriter("C:\\Programacion\\empleados.csv");
+    for (int i = 0; i < pos; i++)
+    {
+        archivo.WriteLine($"{empleados[i].nombres}; {empleados[i].apellidos}; {empleados[i].cargo}; {empleados[i].salario}");
+    }
+    archivo.Close();
+    Console.WriteLine("Registros guardados.");
 }
 
 int main()
@@ -38,6 +58,16 @@ int main()
             case 1:
                 agregarEmpleado(i++);
                 break;
+            case 2:
+                mostrarDatos(i);
+                break;
+            case 3:
+                guardarEmpleados(i);
+                break;
+            default:
+                Console.WriteLine("Opción invalida....");
+                break;
+
         }
     } while (op != 4);
 
